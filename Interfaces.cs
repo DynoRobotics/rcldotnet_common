@@ -32,6 +32,11 @@ namespace ROS2 {
       }
     }
 
+    public interface IRclcsMessage
+    {
+      IntPtr Handle { get; }
+      IntPtr TypeSupportHandle { get; }
+    }
 
     // rosidl
     #pragma warning disable 0169
