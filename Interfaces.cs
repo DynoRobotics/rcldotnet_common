@@ -32,7 +32,7 @@ namespace ROS2 {
       }
     }
 
-    public interface IRclcsMessage
+    public interface IRclcsMessage: System.IDisposable
     {
       IntPtr Handle { get; }
       IntPtr TypeSupportHandle { get; }
