@@ -48,10 +48,10 @@ namespace ROS2 {
       [DllImport ("api-ms-win-core-libraryloader-l1-2-0.dll", EntryPoint = "FreeLibrary", SetLastError = true, ExactSpelling = true)]
       private static extern int FreeLibraryUWP (IntPtr handle);
 
-      [DllImport ("kernel32.dll", EntryPoint = "LoadLibrary", SetLastError = true, ExactSpelling = true)]
-      private static extern IntPtr LoadLibrary (string fileName, int reserved = 0);
+      [DllImport ("kernel32.dll", SetLastError = true)]
+      private static extern IntPtr LoadLibrary (string fileName);
 
-      [DllImport ("kernel32.dll", EntryPoint = "FreeLibrary", SetLastError = true, ExactSpelling = true)]
+      [DllImport ("kernel32.dll", EntryPoint = "FreeLibrary", SetLastError = true)]
       private static extern int FreeLibraryDesktop (IntPtr handle);
 
       [DllImport ("libdl.so", EntryPoint = "dlopen")]
@@ -125,17 +125,26 @@ namespace ROS2 {
       }
 
       private static Platform CheckPlatform () {
-        if (IsUnix ()) {
-          return Platform.Unix;
-        } else if (IsMacOSX ()) {
-          return Platform.MacOSX;
-        } else if (IsWindowsDesktop ()) {
-          return Platform.WindowsDesktop;
-        } else if (IsUWP ()) {
-          return Platform.UWP;
-        } else {
-          return Platform.Unknown;
-        }
+            if (IsUnix())
+            {
+                return Platform.Unix;
+            }
+            else if (IsMacOSX())
+            {
+                return Platform.MacOSX;
+            }
+            else if (IsWindowsDesktop())
+            {
+                return Platform.WindowsDesktop;
+            }
+            else if (IsUWP())
+            {
+                return Platform.UWP;
+            }
+            else
+            {
+                return Platform.Unknown;
+            }
       }
     }
 
@@ -186,8 +195,8 @@ namespace ROS2 {
 
     public class DllLoadUtilsWindowsDesktop : DllLoadUtils {
 
-      [DllImport ("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-      private static extern IntPtr LoadLibrary (string fileName, int reserved = 0);
+      [DllImport ("kernel32.dll", SetLastError = true)]
+      private static extern IntPtr LoadLibrary (string fileName);
 
       [DllImport ("kernel32.dll", SetLastError = true, ExactSpelling = true)]
       private static extern int FreeLibrary (IntPtr handle);
